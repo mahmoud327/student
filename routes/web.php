@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SubServiceController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\RoleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -43,6 +45,10 @@ Route::group([
 
             //route-for-services
             Route::resource('news', NewController::class);
+            //route-for-services
+            Route::resource('roles', RoleController::class);
+            //route-for-services
+            Route::resource('admins', AdminController::class);
 
             Route::resource('users', UserController::class);
             Route::resource('categories', CategoryController::class);
