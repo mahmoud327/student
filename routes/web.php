@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\NewController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SubServiceController;
@@ -41,8 +42,11 @@ Route::group([
             Route::get('home', 'HomeController@index')->name('admin.home');
 
             //route-for-services
+            Route::resource('news', NewController::class);
 
             Route::resource('users', UserController::class);
+            Route::resource('categories', CategoryController::class);
+
 
         });
     });
