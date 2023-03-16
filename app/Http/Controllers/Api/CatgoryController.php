@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
 use App\Models\Post;
 use App\Services\PostService;
@@ -27,10 +28,24 @@ class CatgoryController extends Controller
     public function index()
     {
 
-        $categories = Category::latest()
+        $categories = Category::query()
+            ->whereParentId(0)
+             ->latest()
+
             ->paginate(10);
 
             return JsonResponse::json('ok', ['data' => CategoryResource::collection($categories)]);
+
+    }
+    public function getSubCategories($parent_id)
+    {
+
+        $categories = Category::query()
+            ->whereParent_id($parent_id)
+            ->latest()
+            ->paginate(10);
+
+            return JsonResponse::json('ok', ['data' => SubCategoryResource::collection($categories)]);
 
     }
 

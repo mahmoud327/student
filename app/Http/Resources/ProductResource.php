@@ -4,19 +4,20 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class NewResource extends JsonResource
+class ProductResource extends JsonResource
 {
     public function toArray($request)
     {
 
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'desc' => $this->desc,
+            'name' => $this->name,
+            'price' => $this->price,
             'image' => $this->image_path,
-            'image2' => $this->image_path2,
-            'desc2' => $this->desc2,
+            'desc' => $this->desc,
             'created_at' =>$this->created_at,
+            'category_id' =>$this->category_id,
+            'category' =>SubCategoryResource::make($this->whenLoaded('category')),
 
 
         ];

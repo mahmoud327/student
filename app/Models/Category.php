@@ -10,14 +10,20 @@ class Category extends Model
 
 
     protected $table = 'categories';
-    protected $fillable =['status'];
 
     public $timestamps = true;
     protected $translationForeignKey = "category_id";
     public $translatedAttributes = ['title'];
     public $translationModel = 'App\Models\Translation\Category';
 
+    protected $fillable = array('parent_id','image');
 
+
+    public function getImagePathAttribute()
+    {
+        return $this->image ? asset('uploads/categories/' . $this->image) : asset('uploads/default.jpeg');
+
+    }
 
 
 

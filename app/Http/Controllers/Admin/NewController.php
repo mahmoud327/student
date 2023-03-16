@@ -57,6 +57,10 @@ class NewController extends Controller
             $new->image = $this->uploadImage('uploads/news/', $request->file('image'));
             $new->save();
         }
+        if ($request->file('image2')) {
+            $new->image2 = $this->uploadImage('uploads/news/', $request->file('image2'));
+            $new->save();
+        }
 
 
 
@@ -69,6 +73,10 @@ class NewController extends Controller
         $news->update($request->all());
         if ($request->image) {
             $news->image = $this->uploadImage('uploads/newss/', $request->image);
+            $news->save();
+        }
+        if ($request->image2) {
+            $news->image2 = $this->uploadImage('uploads/newss/', $request->image2);
             $news->save();
         }
         return back()->with('status', "add successfully");

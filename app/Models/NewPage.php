@@ -12,19 +12,19 @@ class NewPage extends Model
     protected $table = 'news';
     protected $appends = [
         'image_path',
+        'image_path2',
     ];
 
     public $timestamps = true;
     protected $translationForeignKey = "new_id";
-    public $translatedAttributes = ['title', 'desc'];
+    public $translatedAttributes = ['title', 'desc','desc2'];
     public $translationModel = 'App\Models\Translation\NewPage';
 
 
     protected $fillable = [
-        'title',
-        'des',
+
         'image',
-        'category_id'
+        'image2',
 
     ];
 
@@ -39,6 +39,10 @@ class NewPage extends Model
     public function getImagePathAttribute()
     {
         return $this->image ? asset('uploads/news/' . $this->image) : asset('uploads/default.jpeg');
+    }
+    public function getImagePath2Attribute()
+    {
+        return $this->image2 ? asset('uploads/news/' . $this->image2) : asset('uploads/default.jpeg');
     }
 
 

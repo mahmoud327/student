@@ -10,7 +10,7 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
 
     use ImageTrait;
@@ -19,19 +19,17 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($parent_id = null)
     {
 
 
-        $categories = Category::query()
-            ->whereParentId(0)
-
+        $services = Category::query()
+            ->where('parent_id', $parent_id)
             ->latest()
 
             ->paginate(10);
 
-
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.subServices.index', compact('services', 'parent_id'));
     }
     /**
      * Store a newly created resource in storage.
@@ -39,23 +37,23 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $parent_id)
     {
         $this->uploadImage('uploads/categories/', $request->file('image'));
+        $request['parent_id'] = $parent_id;
+        $category =  Category::create($request->all());
 
-        $category = Category::create($request->all());
         $category->update(['image' => $request->image->hashName()]);
-
         return back()->with('status', "add successfully");
     }
 
     public function update(Request $request, Category $category)
     {
-        $this->uploadImage('uploads/categories/', $request->file('image'));
+        $this->uploadImage('uploads/services/', $request->file('image'));
 
         $category->update($request->all());
-
         $category->update(['image' => $request->image->hashName()]);
+
 
 
         return back()->with('status', "add successfully");

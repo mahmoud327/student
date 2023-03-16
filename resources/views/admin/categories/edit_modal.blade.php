@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="width:130%">
             <div class="modal-header">
-                <h5 class="modal-name" id="exampleModalLabel">Edit services</h5>
+                <h5 class="modal-name" id="exampleModalLabel">Edit categories</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -17,15 +17,20 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="en[name]"  value="{{optional($service->translate('en'))->name}}"
-                                    placeholder=" name english ">
+                                <input type="text" class="form-control" name="en[title]"  value="{{optional($service->translate('en'))->title}}"
+                                    placeholder=" title english ">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="ar[name]" value="{{optional($service->translate('ar'))->name}}"
-                                    placeholder=" name arabic ">
+                                <input type="text" class="form-control" name="ar[title]" value="{{optional($service->translate('ar'))->title}}"
+                                    placeholder=" title arabic ">
                             </div>
 
+                            <div class="control-group form-group mb-0">
+                                <label>main-image</label>
 
+                                <input type="file" class="form-control required" required name="image"
+                                    placeholder="image">
+                            </div>
 
 
 

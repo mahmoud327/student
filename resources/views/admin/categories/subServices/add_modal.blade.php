@@ -14,29 +14,18 @@
 
                     <div class="control-group form-group">
                         <label class="form-label">name arabic</label>
-                        <input type="text" class="form-control "required name="ar[name]" placeholder="Name">
+                        <input type="text" class="form-control "required name="ar[title]" placeholder="title">
                     </div>
                     <div class="control-group form-group">
-                        <label class="form-label">name English</label>
-                        <input type="text" class="form-control "required name="en[name]"placeholder="text ">
+                        <label class="form-label">title English</label>
+                        <input type="text" class="form-control "required name="en[title]"placeholder="text ">
                     </div>
 
 
-                    <div class="control-group form-group mb-0">
-                        <label class="form-label">desc english</label>
-                        <textarea type="text" class="form-control "required name="en[desc]" placeholder="Address">
-                                </textarea>
-                    </div>
-                    <div class="control-group form-group mb-0">
-                        <label class="form-label">desc arabic</label>
-                        <textarea type="text" class="form-control "required name="ar[desc]"placeholder="Address">
-                      </textarea>
-                    </div>
 
                     <div class="control-group form-group mb-0">
                         <input type="file" class="form-control"required name="image" placeholder="Address">
                     </div>
-
 
 
                     <div class="modal-footer">

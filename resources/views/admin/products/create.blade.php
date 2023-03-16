@@ -20,10 +20,8 @@
     @endif
 
 
-
-
 @section('title')
-    Add news
+    Add product
 @stop
 
 
@@ -33,8 +31,8 @@
 <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
         <div class="d-flex">
-            <h4 class="content-title mb-0 my-auto">newss</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0"> /
-                add news</span>
+            <h4 class="content-title mb-0 my-auto">products</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0"> /
+                add product</span>
         </div>
     </div>
 </div>
@@ -46,59 +44,55 @@
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('news.store') }}" enctype="multipart/form-data" method="post">
+                <form action="{{ route('products.store') }}" enctype="multipart/form-data" method="post">
                     @csrf
                     <div id="wizard1">
-                        <h3>news data</h3>
+                        <h3>product data</h3>
                         <section>
                             <div class="control-group form-group">
-                                <label class="form-label">title arabic</label>
-                                <input type="text" class="form-control required"  required name="ar[title]" placeholder="Name">
+                                <label class="form-label">name arabic</label>
+                                <input type="text" class="form-control required" required name="ar[name]" placeholder="Name">
                             </div>
                             <div class="control-group form-group">
-                                <label class="form-label">title English</label>
-                                <input type="text" class="form-control required" required name="en[title]"placeholder="text ">
+                                <label class="form-label">name English</label>
+                                <input type="text" class="form-control required" required name="en[name]"placeholder="text ">
+                            </div>
+                            <div class="control-group form-group">
+                                <label class="form-label"> price</label>
+                                <input type="number" class="form-control required"  required name="price"placeholder="price ">
+                            </div>
+
+                            <div class="control-group form-group">
+                                <label class="form-label">select category</label>
+                                <select class="form-control" name="category_id" required>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">
+                                            {{ $category->title }}
+                                        </option>
+                                    @endforeach
+
+
+                                </select>
                             </div>
 
 
-                            <div class="control-group form-group mb-0">
-                                <label>main-image</label>
 
-                                <input type="file" class="form-control required" required name="image"
-                                    placeholder="image">
-                            </div>
 
                             <div class="control-group form-group mb-0">
                                 <label class="form-label">desc english</label>
-                                <textarea type="text" class="form-control required"  name="en[desc]" placeholder="desc" required>
+                                <textarea type="text" class="form-control " required name="en[desc]" placeholder="Address">
                                             </textarea>
                             </div>
                             <div class="control-group form-group mb-0">
                                 <label class="form-label">desc arabic</label>
-                                <textarea type="text" class="form-control required"  name="ar[desc]"placeholder="desc" required>
+                                <textarea type="text" class="form-control required"  required  name="ar[desc]"placeholder="Address">
                                   </textarea>
                             </div>
 
                             <div class="control-group form-group mb-0">
-                                <label>main-image</label>
-
-                                <input type="file" class="form-control required" required name="image2"
-                                    placeholder="image">
+                                <input type="file" class="form-control required" required name="image"
+                                    placeholder="Address">
                             </div>
-
-                            <div class="control-group form-group mb-0">
-                                <label class="form-label">desc2 english</label>
-                                <textarea type="text" class="form-control required" name="en[desc2]" placeholder="desc2" required>
-                                            </textarea>
-                            </div>
-                            <div class="control-group form-group mb-0">
-                                <label class="form-label">desc2 arabic</label>
-                                <textarea type="text" class="form-control required"  name="ar[desc2]"placeholder="desc2" required>
-                                  </textarea>
-                            </div>
-
-                            <br>
-                            <br>
 
                             <button type="submit" class="btn btn-info">save</button>
                         </section>
@@ -143,6 +137,4 @@
 <script src="{{ URL::asset('assets/plugins/telephoneinput/inttelephoneinput.js') }}"></script>
 
 <script src="{{ URL::asset('assets/plugins/treeview/treeview.js') }}"></script>
-
-
 @endpush

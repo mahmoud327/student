@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SubServiceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -51,7 +53,11 @@ Route::group([
             Route::resource('admins', AdminController::class);
 
             Route::resource('users', UserController::class);
+            Route::resource('products', ProductController::class);
+
             Route::resource('categories', CategoryController::class);
+            Route::get('categories/sub-categories/{parent_id?}', [SubCategoryController::class, 'index'])->name('category.sub-categories');
+            Route::post('categories/sub-categories/{parent_id?}', [SubCategoryController::class, 'store'])->name('service.sub-services.store');
 
 
         });

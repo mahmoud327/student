@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('new_translations', function (Blueprint $table) {
+        Schema::create('product_translations', function (Blueprint $table) {
             $table->id();
             $table->string('locale')->index();
-            $table->string('title');
+            $table->string('name');
             $table->text('desc');
-            $table->text('desc2');
-            $table->unsignedBigInteger('new_id');
-            $table->foreign('new_id')->references('id')->on('news')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -33,7 +32,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('new_translations');
+        Schema::dropIfExists('product_translations');
 
     }
 };

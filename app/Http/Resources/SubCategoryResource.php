@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class NewResource extends JsonResource
+class SubCategoryResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -12,11 +12,8 @@ class NewResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'desc' => $this->desc,
-            'image' => $this->image_path,
-            'image2' => $this->image_path2,
-            'desc2' => $this->desc2,
-            'created_at' =>$this->created_at,
+            'parent_id' => $this->parent_id,
+
 
 
         ];

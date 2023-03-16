@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CatgoryController;
 use App\Http\Controllers\Api\NewController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::group(['prefix' => 'v1','middleware' => 'lang'],function ()
 {
-    Route::apiResource('posts', PostController::class);
+    Route::apiResource('products', ProductController::class);
 
     Route::apiResource('categories', CatgoryController::class);
+    Route::get('sub-categories/{parent_id}', [CatgoryController::class,'getSubCategories']);
 
     Route::apiResource('news', NewController::class);
 });
