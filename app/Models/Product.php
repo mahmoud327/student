@@ -59,7 +59,8 @@ class Product extends Model
     {
 
         return $q->whereTranslationLike('name', '%' . $search . '%')
-            ->orwhereTranslationLike('desc', '%' . $search . '%');
+            ->orwhereTranslationLike('desc', '%' . $search . '%')
+            ->orwhere('price', '%' . $search . '%');
 
     }
 
