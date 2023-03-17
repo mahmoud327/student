@@ -19,25 +19,25 @@ class RoleController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:roles', ['only' => ['index']]);
-        $this->middleware('permission:create_role', ['only' => ['create','store']]);
-        $this->middleware('permission:update_role', ['only' => ['edit','update']]);
-        $this->middleware('permission:show_role', ['only' => ['show']]);
-        $this->middleware('permission:delete_role', ['only' => ['destroy']]);
+        // $this->middleware('permission:roles', ['only' => ['index']]);
+        // $this->middleware('permission:create_role', ['only' => ['create','store']]);
+        // $this->middleware('permission:update_role', ['only' => ['edit','update']]);
+        // $this->middleware('permission:show_role', ['only' => ['show']]);
+        // $this->middleware('permission:delete_role', ['only' => ['destroy']]);
     }
 
 
     public function index(Request $request)
     {
         $roles = Role::orderBy('id', 'DESC')->get();
-        return view('web.admin.roles.index', compact('roles'))->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('admin.roles.index', compact('roles'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
 
     public function create()
     {
         $permission = Permission::get();
-        return view('web.admin.roles.create', compact('permission'));
+        return view('admin.roles.create', compact('permission'));
     }
     /**
     * Store a newly created resource in storage.
@@ -77,7 +77,7 @@ class RoleController extends Controller
         $role = Role::find($id);
         $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
                                      ->where("role_has_permissions.role_id", $id)->get();
-        return view('web.admin.roles.show', compact('role', 'rolePermissions'));
+        return view('admin.roles.show', compact('role', 'rolePermissions'));
     }
     /**
     * Show the form for editing the specified resource.
@@ -91,7 +91,7 @@ class RoleController extends Controller
         $permission = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)
                              ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')->all();
-        return view('web.admin.roles.edit', compact('role', 'permission', 'rolePermissions'));
+        return view('admin.roles.edit', compact('role', 'permission', 'rolePermissions'));
     }
     /**
     * Update the specified resource in storage.
@@ -128,13 +128,5 @@ class RoleController extends Controller
     }
 
 
-    public function delete_all(Request $request)
-    {
-        $delete_all_id = explode(",", $request->delete_all_id);
 
-
-        Role::whereIn('id', $delete_all_id)->delete();
-
-        return back()->with('status', "Deleted successfully");
-    }
 }

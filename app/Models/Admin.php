@@ -14,7 +14,7 @@ use Auth;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles,HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -61,14 +61,4 @@ class Admin extends Authenticatable
 
     ];
 
-
-    public function code()
-    {
-        return $this->belongsTo('App\Models\MarketerCode', 'marketer_code_id');
-    }
-
-    public function organizationService()
-    {
-        return $this->belongsTo('App\Models\OrganizationService');
-    }
 }

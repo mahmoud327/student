@@ -1,5 +1,5 @@
 
-@extends('layouts.master')
+@extends('admin.layouts.master')
 @section('css')
 <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 <!---Internal Fileupload css-->
@@ -68,7 +68,7 @@ Add roles
                         @endif
 
                     <div class="pull-right">
-                        <a class="btn btn-primary btn-sm" href="{{ route('roles.index') }}">{{ trans('lang.back') }}</a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('roles.index') }}">back</a>
                     </div>
 
                     <br>
@@ -77,7 +77,7 @@ Add roles
                         action="{{route('roles.store')}}" enctype="multipart/form-data"   method="post">
 
                             {{csrf_field()}}
-                                   
+
                             <div class="form-group col-sm-5"  >
                                 <p>اسم الصلاحية :</p>
                                 <input type="text" name="name" class="form-control"/>
@@ -86,29 +86,29 @@ Add roles
                                 <a href="#">الصلاحيات</a>
                                 <ul id="treeview1">
                                         <th><input name="select_all" id="delete_all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
-                                
+
                                         @foreach($permission as $value)
-                                            <br> 
+                                            <br>
                                             <label
                                                 style="font-size: 16px;">
-                                            
+
                                                 <td><input id="cat-box" type="checkbox" name="permission[]" value="{{$value->id}}" class="box1" ></td>
-        
+
                                                 {{ $value->name }}
                                             </label>
                                         @endforeach
-                                       
-        
+
+
                                 </ul>
-                             
-                               
+
+
                             </div>
 
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                <button class="btn btn-main-primary pd-x-20" type="submit">{{ trans('lang.save') }}</button>
+                                <button class="btn btn-main-primary pd-x-20" type="submit">save</button>
                             </div>
 
-                           
+
                     </form>
 
             </div>
@@ -150,14 +150,14 @@ Add roles
     var l = elements.length;
     if (elem.checked)
     {
-        for (var i = 0; i < l; i++) 
+        for (var i = 0; i < l; i++)
         {
             elements[i].checked = true;
         }
-    } 
-    else 
+    }
+    else
     {
-        for (var i = 0; i < l; i++) 
+        for (var i = 0; i < l; i++)
         {
             elements[i].checked = false;
         }

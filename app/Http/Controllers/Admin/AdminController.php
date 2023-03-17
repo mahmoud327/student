@@ -15,22 +15,23 @@ use DB;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:admins', ['only' => ['index']]);
-        $this->middleware('permission:create_admin', ['only' => ['create','store']]);
-        $this->middleware('permission:update_admin', ['only' => ['edit','update']]);
-        $this->middleware('permission:show_admin', ['only' => ['show']]);
-        $this->middleware('permission:activate_admin', ['only' => ['admins.activate,admins.deactivate']]);
-        $this->middleware('permission:delete_all_admin', ['only' => ['admins.delete_all']]);
-        $this->middleware('permission:delete_admin', ['only' => ['destroy']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:admins', ['only' => ['index']]);
+    //     $this->middleware('permission:create_admin', ['only' => ['create','store']]);
+    //     $this->middleware('permission:update_admin', ['only' => ['edit','update']]);
+    //     $this->middleware('permission:show_admin', ['only' => ['show']]);
+    //     $this->middleware('permission:activate_admin', ['only' => ['admins.activate,admins.deactivate']]);
+    //     $this->middleware('permission:delete_all_admin', ['only' => ['admins.delete_all']]);
+    //     $this->middleware('permission:delete_admin', ['only' => ['destroy']]);
+    // }
 
     // to show all accounts
     public function index()
     {
+
         $admins = Admin::all();
-        return view('web.admin.admins.index', compact('admins'));
+        return view('admin.admins.index', compact('admins'));
     }
 
     // to add an account
@@ -38,7 +39,7 @@ class AdminController extends Controller
     public function create()
     {
         $roles = Role::select('name')->get();
-        return view('web.admin.admins.create', compact('roles'));
+        return view('admin.admins.create', compact('roles'));
     }
 
 
@@ -48,7 +49,6 @@ class AdminController extends Controller
         $rules = [
         'email'                   =>'required|unique:admins',
         'name'                   =>'required',
-        'phone'                   =>'required|numeric',
         'password'                =>'required|confirmed',
 
       ];
@@ -58,8 +58,6 @@ class AdminController extends Controller
         'name.required' => 'يجب ادخال  الاسم',
         'email.unique'   =>'الايميل  موجود بالفعل',
 
-        'phone.required' =>'يجب ادخال رقم الهاتف',
-        'phone.numeric' =>'يجب ان يكون الهاتف رقما',
         'password.required' =>'يجب ادخال كلمة المرور',
         'password.confirmed' =>'يجب تأكيد كلمة المرور',
       ];
@@ -67,37 +65,16 @@ class AdminController extends Controller
         $this->validate($request, $rules, $messages);
 
         $request->merge(['password' => bcrypt($request->password)]);
-        $admin = Admin::create($request->except(['is_marketer']));
+        $admin = Admin::create($request->all());
 
 
-        if ($request->is_marketer == "marketer") {
-            $code = "S".$admin->name[0] . '#'  . Str::random(4);
 
-            $marketer_code = MarketerCode::create([
-
-            'code' => $code
-          ]);
-
-            $admin->marketer_code_id = $marketer_code->id;
-            $admin->update();
-        }
-
-        if ($request->is_marketer == "organization_service") {
-            $admin->organization_service_id=$request->organization_service;
-            $admin->save();
-        }
 
 
 
         $admin->assignRole($request->input('roles_name'));
 
-        if ($request->has('image')) {
-            $file_name = $request->file('image')->store('uploads/admins', 's3');
-            \Storage::disk('s3')->setVisibility($file_name, 'public');
 
-            $admin->image  = $file_name;
-            $admin->save();
-        }
 
         return back()->with('status', 'Added successfully.');
     }
@@ -108,7 +85,7 @@ class AdminController extends Controller
         $roles = Role::pluck('name', 'name')->all();
         $adminRole = $admin->roles->pluck('name', 'name')->all();
 
-        return view('web.admin.admins.edit', compact('admin', 'roles', 'adminRole'));
+        return view('admin.admins.edit', compact('admin', 'roles', 'adminRole'));
     }
 
     // to update an account
@@ -118,7 +95,6 @@ class AdminController extends Controller
 
         $rules = [
         'name' => 'required',
-        'phone' => 'required',
         'email' => 'required|email|unique:admins,email,'.$id,
         'password' =>'confirmed',
         'image'   =>'image|mimes:jpeg,png,jpg,gif,svg'
@@ -130,7 +106,6 @@ class AdminController extends Controller
         'email.required'        => 'ادخل البريد الالكتروني',
         'email.unique'          => ' هذا البريد يستخدمه شخص اخر',
         'password.confirmed'         => 'كلمة المرور غير متطابقة',
-        'phone.required'   => 'التلفون مطلوب'
       ];
 
         $this->validate($request, $rules, $messages);

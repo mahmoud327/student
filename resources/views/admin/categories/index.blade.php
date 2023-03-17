@@ -120,9 +120,11 @@
     <div class="col-xl-12">
         <div class="card mg-b-20">
             <div class="card-header pb-0">
+                @can('category-create')
 
                 <a class="modal-effect btn btn-outline-primary" data-effect="effect-scale" data-toggle="modal"
                     href="#modaldemo8">Add categories</a>
+                    @endcan
 
                 @include('admin.categories.add_modal')
 
@@ -148,21 +150,32 @@
                                     </td>
                                     <td>{{ $service->title }}</td>
                                     <td>
+                                        @can('category-edit')
+
                                         <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
                                             data-toggle="modal" href="#exampleModal2{{ $service->id }}"
                                             title="edit">
                                             <i class="las la-pen"></i>
                                         </a>
+                                        @endcan
+
+                                        @can('category-list')
 
                                         <a href="{{ route('category.sub-categories', $service->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <i class="far fa-eye"></i>
                                         </a>
+                                        @endcan
+
+                                        @can('categories-delete')
+
 
                                         <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                             data-toggle="modal" href="#modaldemo9{{ $service->id }} " title="delete">
                                             delete
                                         </a>
+                                        @endcan
+
                                     </td>
                                 </tr>
                                 @include('admin.categories.delete_modal', ['service' => $service])

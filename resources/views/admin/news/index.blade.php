@@ -120,8 +120,10 @@
     <div class="col-xl-12">
         <div class="card mg-b-20">
             <div class="card-header pb-0">
+                    @can('news-create')
 
                     <a class="btn btn-outline-primary" href="{{route('news.create')}}">Add news</a>
+                    @endcan
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -148,12 +150,18 @@
                                     </td>
                                     <td>{{ $new->title }}</td>
                                      <td>
+                                        @can('news-edit')
+
                                         <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal" href="#exampleModal2{{$new->id}}" title="edit">
                                             <i class="las la-pen"></i>
                                         </a>
+                                        @endcan
+                                        @can('news-delete')
+
                                         <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-toggle="modal" href="#modaldemo9{{$new->id}} " title="delete">
                                             delete
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @include('admin.news.delete_modal' ,['new'=>$new])

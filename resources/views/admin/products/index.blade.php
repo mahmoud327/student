@@ -120,8 +120,10 @@
     <div class="col-xl-12">
         <div class="card mg-b-20">
             <div class="card-header pb-0">
+                   @can('product-create')
 
-                    <a class="btn btn-outline-primary" href="{{route('products.create')}}">Add Product</a>
+                   <a class="btn btn-outline-primary" href="{{route('products.create')}}">Add Product</a>
+                   @endcan
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -146,12 +148,20 @@
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->price }}</td>
                                      <td>
+                                        @can('product-edit')
+
                                         <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal" href="#exampleModal2{{$product->id}}" title="edit">
                                             <i class="las la-pen"></i>
                                         </a>
+                                        @endcan
+                                        @can('product-delete')
+
                                         <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-toggle="modal" href="#modaldemo9{{$product->id}} " title="delete">
                                             delete
                                         </a>
+                                        @endcan
+
+
                                     </td>
                                 </tr>
                                 @include('admin.products.delete_modal' ,['product'=>$product])

@@ -42,7 +42,7 @@ Route::group([
         Route::post('login', 'AuthController@login')->name('admin.login');
         Route::get('logout', 'AuthController@logout')->name('admin.logout');
 
-        Route::group(['middleware' => ['admin']], function () {
+        Route::group(['middleware' => ['auth:admins']], function () {
             Route::get('home', 'HomeController@index')->name('admin.home');
 
             //route-for-services

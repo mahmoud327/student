@@ -1,5 +1,5 @@
 
-@extends('layouts.master')
+@extends('admin.layouts.master')
 @section('css')
 <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 <!---Internal Fileupload css-->
@@ -107,45 +107,40 @@ Add admin
                                 <input class="form-control form-control-sm mg-b-20"
                                     data-parsley-class-handler="#lnWrapper" name="name"  type="text" placeholder="Name" value="{{$admin->name}}">
                             </div>
-                          
+
                             <div class="col-md-5" id="fnWrapper">
                                 <label>password : <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
                                     data-parsley-class-handler="#lnWrapper" name="password"  type="password" placeholder="password">
                             </div>
-                      
-                        
+
+
 
                             <div class="col-md-5" id="fnWrapper">
                                 <label>password_confirmation : <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
                                     data-parsley-class-handler="#lnWrapper" value=""  name="password_confirmation" type="password" placeholder="password_confirmation">
                             </div>
-               
+
                             <div class="col-md-5" id="fnWrapper">
                                 <label>email : <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
                                     data-parsley-class-handler="#lnWrapper" name="email"  type="text" placeholder="email" value="{{$admin->email}}">
                             </div>
 
-                            <div class="col-md-5 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                <label> {{ trans('lang.phone') }}: <span class="tx-danger">*</span></label>
-                                <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper"  name="phone" placeholder="phone"  value="{{$admin->phone}}">
-                            </div>
-                            
+                        
                             <br>
 
-                      
-                            
-                          
+
+
+
                             <div class="col-md-5 mg-t-20 mg-md-t-0" id="lnWrapper">
-                               
+
                                 <label class="form-label"> صلاحية المستخدم</label>
                                 <select multiple="multiple" name="roles_name[]" class="js-example-basic-multiple" style="width: 100%">
-                                       
+
                                         @foreach ($roles  as $role)
-                                        <option  onlyslave="True"  name="roles_name[]" value="{{$role}}"                                                              
+                                        <option  onlyslave="True"  name="roles_name[]" value="{{$role}}"
                                             @if(in_array( $role,$adminRole ))  selected   @endif  >
                                             {{$role}}
                                         </option>
@@ -154,23 +149,13 @@ Add admin
                                 <br>
 
                             </div>
-                            
+
 
 
                              <br>
-                             <div  class="col-md-5 mg-t-20 mg-md-t-0" id="image" >
-                                <div class="custom-file">
-                                    <input class="custom-file-input" name="image" value="{{$admin->image}}" type="file"> <label class="custom-file-label" for="customFile">Choose image</label>
-                                </div>
-                            </div>
 
-                            <br>
-                              <div class="form-group" id="image_edit">
-                                
-                                  <img style="width: 80px;height:60px"  src="{{ env('AWS_S3_URL').'/'.$admin->image }}" alt="categories-image">
-                               
-                            </div>
-                            <br>
+
+
 
 
 
@@ -212,16 +197,16 @@ Add admin
 
 <script>
 
-    $("#image").change(function() 
+    $("#image").change(function()
     {
-    
+
         $('#image_edit').css('display','none');
-      
+
     });
-    
+
  </script>
 
- 
+
 <script>
 
     $(document).ready(function() {
@@ -231,7 +216,7 @@ Add admin
          closeOnSelect: false
 
         });
-    
+
     });
 
 </script>

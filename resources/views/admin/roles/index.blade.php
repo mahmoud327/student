@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 @section('title')
 roles
 @stop
@@ -18,7 +18,7 @@ roles
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">role</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ 
+                <h4 class="content-title mb-0 my-auto">role</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
                     roles</span>
             </div>
         </div>
@@ -44,58 +44,29 @@ roles
     <!-- row -->
     <div class="row">
         <!--div-->
- 
+
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-           
+
                 <a href="{{route('roles.create')}}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
                         class="fas fa-plus"></i>&nbsp;Add roles</a>
                 <br>
                 <br>
 
-                   <a  href="#"
-                        data-toggle="modal" data-target="#delete_all"><i
-                            class="btn btn-danger  btn-sm" id="btn_delete_all"  >{{ trans('lang.delete_all') }}</i>&nbsp;&nbsp;
-                    </a> 
-                    <br>  
-                    <br>        
-      
-     
+
+
+
                 </div>
 
 
                 <!-- ////////////////////////modela for delete///////////// -->
-         
+
           <!-- ////////////////////////modela for delete///////////// -->
-          
 
-                    <div class="modal fade" id="delete_all" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ trans('lang.delete') }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <form action="{{route('admins.roles.delete_all') }}" method="post">
-                                        {{ method_field('delete') }}
-                                        {{ csrf_field() }}
-                                </div>
-                                <div class="modal-body">
-                                    <input class="text" type="hidden" id="delete_all_id" name="delete_all_id" value=''>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('lang.close') }}</button>
-                                    <button type="submit" class="btn btn-danger">{{ trans('lang.save') }}</button>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
 
-                      
+
+
 
                 <div class="card-body">
                     <div class="table-responsive">
@@ -105,7 +76,7 @@ roles
                                     <th><input name="select_all" id="delete_all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
                                     <th class="border-bottom-0">#</th>
                                     <th class="border-bottom-0">name </th>
-                          
+
                                     <th class="border-bottom-0">{{ trans('lang.action') }}</th>
 
                                 </tr>
@@ -122,18 +93,18 @@ roles
                                         <td><input id="cat-box" type="checkbox" name="categories"  value="{{$role->id}}" class="box1" ></td>
                                         <td>{{ $i }}</td>
                                         <td>{{ $role->name }} </td>
-                                        <td> 
-                                             @can('show_role')
+                                        <td>
+                                             @can('role-show')
                                                 <a class="btn btn-success btn-sm"
                                                 href="{{ route('roles.show', $role->id) }}">عرض</a>
                                             @endcan
 
-                                            @can('update_role')
+                                            @can('role-update')
                                             <a class="btn btn-primary btn-sm"
                                             href="{{ route('roles.edit', $role->id) }}">تعديل</a>
                                             @endcan
 
-                                            @can('delete_role')
+                                            @can('role-delete')
 
                                              <a class="modal-effect btn btn-sm btn-danger"  data-role_id="{{ $role->id }}" data-effect="effect-scale"
                                             data-toggle="modal" href="#modaldemo9{{$role->id }}" title="delete"><i
@@ -144,10 +115,10 @@ roles
 
 
                                         </td>
-                                        @include('web.admin.roles.delate_modal' ,['role'=>$role])
+                                        @include('admin.roles.delate_modal' ,['role'=>$role])
 
-                                        
-                    
+
+
                                     </tr>
                                 @endforeach
 
@@ -161,10 +132,10 @@ roles
     </div>
 
     <!-- حذف الفاتورة -->
- 
+
 
     <!-- ارشيف الفاتورة -->
-   
+
     </div>
     <!-- row closed -->
     </div>
@@ -196,7 +167,7 @@ roles
     <script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 
-   
+
 {{-- <script>
     $(document).ready(function() {
   $('#search').on('change', function() {
@@ -212,7 +183,7 @@ $(function()
         var selected = new Array();
         $("#example1 input[type=checkbox]:checked").each(function() {
             selected.push(this.value);
-            
+
         });
         if (selected.length > 0) {
             $('#delete_all').modal('show')
@@ -220,10 +191,10 @@ $(function()
         }
     });
     });
-    
+
 </script>
 
-    
+
 <script>
     function CheckAll(className, elem)
     {
@@ -231,14 +202,14 @@ $(function()
     var l = elements.length;
     if (elem.checked)
     {
-        for (var i = 0; i < l; i++) 
+        for (var i = 0; i < l; i++)
         {
             elements[i].checked = true;
         }
-    } 
-    else 
+    }
+    else
     {
-        for (var i = 0; i < l; i++) 
+        for (var i = 0; i < l; i++)
         {
             elements[i].checked = false;
         }

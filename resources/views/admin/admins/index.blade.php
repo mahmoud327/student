@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -121,51 +121,14 @@
             <div class="card-header pb-0">
 
                 <div class="">
-                    @can('create_admin')
+                    @can('admin-create')
                         <a class="btn btn-outline-primary"
                         href="{{route('admins.create')}}">Add Admin </a>
                     @endcan
-                   
+
                  </div>
                 <br>
-              @can('delete_all_admin')
 
-                 <a  href="#"
-                    data-toggle="modal" data-target="#delete_all"><i
-                    class="btn btn-danger  btn-sm" id="btn_delete_all"  >delete all</i>&nbsp;&nbsp;
-                </a>
-                    
-                
-                <div class="modal fade" id="delete_all" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">delete</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <form action="{{route('admins.delete_all') }}" method="post">
-                                    {{ method_field('delete') }}
-                                    {{ csrf_field() }}
-                            </div>
-                            <div class="modal-body">
-                                <input class="text" type="hidden" id="delete_all_id" name="delete_all_id" value=''>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                                <button type="submit" class="btn btn-danger">تاكيد</button>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                    </div>
-    
-
-
-
-                </div>
-            @endcan
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'
@@ -174,57 +137,46 @@
                             <tr>
                                 <th><input name="select_all" id="delete_all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
                                 <th class="border-bottom-0">#</th>
-                                <th class="border-bottom-0">image</th>
                                 <th class="border-bottom-0">name</th>
                                 <th class="border-bottom-0">email</th>
-                                <th class="border-bottom-0">phone</th>
-                                <th class="border-bottom-0">maketer code</th>
                                 <th class="border-bottom-0">action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($admins as $admin )
 
-                            
+
 
                                 <tr>
                                     <td><input id="cat-box" type="checkbox" name="admins"  value="{{$admin->id}}" class="box1" ></td>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><img style="width: 80px;height:60px" src="{{ env('AWS_S3_URL').'/'. $admin->image}}" alt="admin-image"></td>
                                     <td>{{ $admin->name }}</td>
                                     <td>{{ $admin->email }}</td>
-                                    <td>{{ $admin->phone }}</td>
-                                    <td>@if($admin->marketer_code_id) {{optional($admin->code)->code}} @endif</td>
                                     <td>
-                                        @can('activate_admin')
-                                            @if($admin->activate)
-                                                <a href="{{url(route('admins.deactivate',$admin->id))}}"
-                                                class="btn btn-sm btn btn-danger">إلغاء التفعيل</a>
-                                                @else
-                                                    <a href="{{url(route('admins.activate',$admin->id))}}"
-                                                    class="btn btn-sm btn btn-success">تفعيل</a>
-                                                @endif
-                                        @endcan
 
-                                        @can('update_admin')     
+                                        {{-- @can('admin-edit') --}}
+
                                             <a class="btn btn-sm btn-info"
-                                                href="{{route('admins.edit',$admin->id)}}" title="edit"><i class="las la-pen"></i></a> 
-                                         @endcan
+                                                href="{{route('admins.edit',$admin->id)}}" title="edit"><i class="las la-pen"></i></a>
+                                        {{-- @endcan --}}
 
-                                         @can('delete_admin') 
+                                        @can('admin-delete')
+
+
                                          <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                          data-toggle="modal" href="#modaldemo9{{ $admin->id }}" title="delete"><i
                                          class="las la-trash"></i></a>
-                                         @include('web.admin.admins.delete_modal' ,['admin'=>$admin])
-
                                          @endcan
-                                        
+                                         
+                                         @include('admin.admins.delete_modal' ,['admin'=>$admin])
+
+
 
 
                                     </td>
                                 </tr>
 
-                            
+
                             @endforeach
                         </tbody>
                     </table>
@@ -234,16 +186,16 @@
     </div>
 
 
-    
+
 
 
 
     </div>
 
-    @include('web.admin.features.add_modal')
-    
+    {{-- @include('web.admin.features.add_modal') --}}
+
     <!-- delete -->
-    
+
 
 
 
@@ -301,7 +253,7 @@ $(function()
         var selected = new Array();
         $("#example1 input[type=checkbox]:checked").each(function() {
             selected.push(this.value);
-            
+
         });
         if (selected.length > 0) {
             $('#delete_all').modal('show')
@@ -309,7 +261,7 @@ $(function()
         }
     });
     });
-        
+
 </script>
 
 <script>
@@ -322,16 +274,16 @@ $(function()
 
     if (elem.checked)
     {
-        for (var i = 0; i < l; i++) 
+        for (var i = 0; i < l; i++)
         {
             elements[i].checked = true;
         }
-    } 
-    else 
+    }
+    else
 
     {
 
-        for (var i = 0; i < l; i++) 
+        for (var i = 0; i < l; i++)
         {
             elements[i].checked = false;
         }
