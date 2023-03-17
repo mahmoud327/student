@@ -154,11 +154,11 @@
                                     <td>{{ $admin->email }}</td>
                                     <td>
 
-                                        {{-- @can('admin-edit') --}}
+                                        @can('admin-edit')
 
                                             <a class="btn btn-sm btn-info"
                                                 href="{{route('admins.edit',$admin->id)}}" title="edit"><i class="las la-pen"></i></a>
-                                        {{-- @endcan --}}
+                                        @endcan
 
                                         @can('admin-delete')
 
@@ -167,7 +167,7 @@
                                          data-toggle="modal" href="#modaldemo9{{ $admin->id }}" title="delete"><i
                                          class="las la-trash"></i></a>
                                          @endcan
-                                         
+
                                          @include('admin.admins.delete_modal' ,['admin'=>$admin])
 
 

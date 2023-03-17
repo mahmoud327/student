@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-roles
+    roles
 @stop
 @section('css')
     <!-- Internal Data table css -->
@@ -29,15 +29,15 @@ roles
 @section('content')
 
     @if (session('status'))
-    <div class="alert alert-success" role="alert">
-        <button type="button" class="btn-close btn-close-white" data-dismiss="alert" aria-label="Close">×</button>
-        {{ session('status') }}
-    </div>
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn-close btn-close-white" data-dismiss="alert" aria-label="Close">×</button>
+            {{ session('status') }}
+        </div>
     @elseif(session('failed'))
-    <div class="alert alert-danger" role="alert">
-        <button type="button" class="btn-close btn-close-white" aria-label="Close">×</button>
-        {{ session('failed') }}
-    </div>
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn-close btn-close-white" aria-label="Close">×</button>
+            {{ session('failed') }}
+        </div>
     @endif
 
 
@@ -48,11 +48,13 @@ roles
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
+                    @can('role-create')
+                        <a href="{{ route('roles.create') }}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
+                                class="fas fa-plus"></i>&nbsp;Add roles</a>
+                    @endcan
 
-                <a href="{{route('roles.create')}}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
-                        class="fas fa-plus"></i>&nbsp;Add roles</a>
-                <br>
-                <br>
+                    <br>
+                    <br>
 
 
 
@@ -62,7 +64,7 @@ roles
 
                 <!-- ////////////////////////modela for delete///////////// -->
 
-          <!-- ////////////////////////modela for delete///////////// -->
+                <!-- ////////////////////////modela for delete///////////// -->
 
 
 
@@ -70,10 +72,12 @@ roles
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'style="text-align: center">
+                        <table id="example1" class="table key-buttons text-md-nowrap"
+                            data-page-length='50'style="text-align: center">
                             <thead>
                                 <tr>
-                                    <th><input name="select_all" id="delete_all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
+                                    <th><input name="select_all" id="delete_all" type="checkbox"
+                                            onclick="CheckAll('box1', this)" /></th>
                                     <th class="border-bottom-0">#</th>
                                     <th class="border-bottom-0">name </th>
 
@@ -83,39 +87,39 @@ roles
                             </thead>
                             <tbody>
                                 @php
-                                $i = 0;
+                                    $i = 0;
                                 @endphp
                                 @foreach ($roles as $role)
                                     @php
-                                    $i++
+                                        $i++;
                                     @endphp
                                     <tr>
-                                        <td><input id="cat-box" type="checkbox" name="categories"  value="{{$role->id}}" class="box1" ></td>
+                                        <td><input id="cat-box" type="checkbox" name="categories"
+                                                value="{{ $role->id }}" class="box1"></td>
                                         <td>{{ $i }}</td>
                                         <td>{{ $role->name }} </td>
                                         <td>
-                                             @can('role-show')
+                                            @can('role-show')
                                                 <a class="btn btn-success btn-sm"
-                                                href="{{ route('roles.show', $role->id) }}">عرض</a>
+                                                    href="{{ route('roles.show', $role->id) }}">عرض</a>
                                             @endcan
 
                                             @can('role-update')
-                                            <a class="btn btn-primary btn-sm"
-                                            href="{{ route('roles.edit', $role->id) }}">تعديل</a>
+                                                <a class="btn btn-primary btn-sm"
+                                                    href="{{ route('roles.edit', $role->id) }}">تعديل</a>
                                             @endcan
 
                                             @can('role-delete')
-
-                                             <a class="modal-effect btn btn-sm btn-danger"  data-role_id="{{ $role->id }}" data-effect="effect-scale"
-                                            data-toggle="modal" href="#modaldemo9{{$role->id }}" title="delete"><i
-                                                class="las la-trash"></i></a>
-
+                                                <a class="modal-effect btn btn-sm btn-danger"
+                                                    data-role_id="{{ $role->id }}" data-effect="effect-scale"
+                                                    data-toggle="modal" href="#modaldemo9{{ $role->id }}" title="delete"><i
+                                                        class="las la-trash"></i></a>
                                             @endcan
 
 
 
                                         </td>
-                                        @include('admin.roles.delate_modal' ,['role'=>$role])
+                                        @include('admin.roles.delate_modal', ['role' => $role])
 
 
 
@@ -168,7 +172,7 @@ roles
     <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 
 
-{{-- <script>
+    {{-- <script>
     $(document).ready(function() {
   $('#search').on('change', function() {
      document.forms[myFormName].submit();
@@ -176,46 +180,38 @@ roles
 });
 </script> --}}
 
-<script>
-$(function()
-    {
-    $("#btn_delete_all").click(function() {
-        var selected = new Array();
-        $("#example1 input[type=checkbox]:checked").each(function() {
-            selected.push(this.value);
+    <script>
+        $(function() {
+            $("#btn_delete_all").click(function() {
+                var selected = new Array();
+                $("#example1 input[type=checkbox]:checked").each(function() {
+                    selected.push(this.value);
 
+                });
+                if (selected.length > 0) {
+                    $('#delete_all').modal('show')
+                    $('input[id="delete_all_id"]').val(selected);
+                }
+            });
         });
-        if (selected.length > 0) {
-            $('#delete_all').modal('show')
-            $('input[id="delete_all_id"]').val(selected);
-        }
-    });
-    });
-
-</script>
+    </script>
 
 
-<script>
-    function CheckAll(className, elem)
-    {
-    var elements = document.getElementsByClassName(className);
-    var l = elements.length;
-    if (elem.checked)
-    {
-        for (var i = 0; i < l; i++)
-        {
-            elements[i].checked = true;
+    <script>
+        function CheckAll(className, elem) {
+            var elements = document.getElementsByClassName(className);
+            var l = elements.length;
+            if (elem.checked) {
+                for (var i = 0; i < l; i++) {
+                    elements[i].checked = true;
+                }
+            } else {
+                for (var i = 0; i < l; i++) {
+                    elements[i].checked = false;
+                }
+            }
         }
-    }
-    else
-    {
-        for (var i = 0; i < l; i++)
-        {
-            elements[i].checked = false;
-        }
-    }
-    }
-</script>
+    </script>
 
 
 @endsection
