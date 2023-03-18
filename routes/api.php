@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'middleware' => 'lang'], function () {
 
 
-    Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
+    Route::group(['middleware' => 'auth:api'], function () {
 
         Route::post('buy-product', [ProductController::class, 'buyProudct']);
     });
