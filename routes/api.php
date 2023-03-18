@@ -27,6 +27,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'lang'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
 
         Route::post('buy-product', [ProductController::class, 'buyProudct']);
+        Route::get('buy-product', [ProductController::class, 'getBuyProudct']);
     });
 
     Route::apiResource('products', ProductController::class);
