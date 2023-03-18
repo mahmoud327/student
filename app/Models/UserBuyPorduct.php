@@ -14,6 +14,8 @@ class UserBuyPorduct extends Model
        'product_id',
        'user_id',
 
+
+       
     ];
 
     public function product(){
