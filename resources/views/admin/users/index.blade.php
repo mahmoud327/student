@@ -156,13 +156,13 @@
 
                                                 <a href="{{route('user.not-publish',$user->id)}}"
                                                     class="btn btn-danger">
-                                                    not publish
+                                                    not active
                                                 </a>
 
                                                 @else
                                                 <a href="{{route('user.publish',$user->id)}}"
-                                                    class="xm-btn btn-primary">
-                                                publish</a>
+                                                    class="btn btn-primary">
+                                                active</a>
 
                                                 @endif
 
