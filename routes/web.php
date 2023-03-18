@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SubServiceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SubCategoryController;
@@ -53,6 +54,13 @@ Route::group([
             Route::resource('admins', AdminController::class);
 
             Route::resource('users', UserController::class);
+
+            Route::get('user/publish/{id}', [UserController::class, 'Publish'])->name('user.publish');
+            Route::get('user/not-publish/{id}', [UserController::class, 'notPublish'])->name('user.not-publish');
+
+
+            Route::resource('patient', PatientController::class);
+
             Route::resource('products', ProductController::class);
 
             Route::resource('categories', CategoryController::class);

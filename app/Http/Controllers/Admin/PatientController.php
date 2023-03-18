@@ -12,7 +12,7 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class UserController extends Controller
+class PatientController extends Controller
 {
 
     use ImageTrait;
@@ -25,12 +25,13 @@ class UserController extends Controller
     {
 
 
-        $users=User::latest()
-        ->whereType('doctor')
-
+        $users=User::query()
+        ->whereType('patient')
+        ->latest()
         ->paginate(10);
 
-        return view('admin.users.index',compact('users'));
+
+        return view('admin.patients.index',compact('users'));
     }
     /**
      * Store a newly created resource in storage.
@@ -47,37 +48,11 @@ class UserController extends Controller
         return back()->with('status', "add successfully");
     }
 
-    public function update(Request $request, Service $category)
+
+    public function destroy(Category $category)
     {
-
-        $category->update($request->all());
-
-
-        return back()->with('status', "add successfully");
-    }
-
-    public function destroy($id)
-    {
-        $user=User::find($id);
-        $user->delete();
+        $category->delete();
         return back()->with('status', "deleted successfully");
-    }
-
-    public function Publish($id)
-    {
-        $user = user::find($id);
-        $user->status = 1;
-        $user->save();
-        return back()->with('success', __('user Publish Successful'));
-
-    }
-    public function notPublish($id)
-    {
-        $user = user::find($id);
-        $user->status = 0;
-        $user->save();
-        return back()->with('success', __('offer notPublish Successful'));
-
     }
 
 }

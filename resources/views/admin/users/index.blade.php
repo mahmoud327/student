@@ -8,9 +8,9 @@
     <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <!---Internal  Owl Carousel css-->
-    <link href="{{URL::asset('assets/plugins/owl-carousel/owl.carousel.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
     <!--- Internal Sweet-Alert css-->
-    <link href="{{URL::asset('assets/plugins/sweet-alert/sweetalert.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/plugins/sweet-alert/sweetalert.css') }}" rel="stylesheet">
 
 @section('title')
     {{ trans('lang.page_title_of_account') }}
@@ -38,7 +38,8 @@
         <div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
             <div class="card-header text-danger font-weight-bold">
                 <i class="far fa-times-circle"></i> Error Data
-                <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
+                <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span
+                        aria-hidden="true">×</span></button>
             </div>
             <div class="card-body text-danger">
                 <ul>
@@ -56,14 +57,13 @@
 
 
 @if (session()->has('Add'))
-
-
     <div class="col-lg-12 col-md-12">
         <!--Page Widget Error-->
         <div class="card bd-0 mg-b-20 bg-success-transparent alert p-0">
             <div class="card-header text-success font-weight-bold">
                 <i class="far fa-check-circle"></i> Success Data
-                <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
+                <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span
+                        aria-hidden="true">×</span></button>
             </div>
             <div class="card-body text-success">
                 <strong>Well done!</strong> {{ session()->get('Add') }}
@@ -75,13 +75,13 @@
 @endif
 
 @if (session()->has('delete'))
-
     <div class="col-lg-12 col-md-12">
 
         <div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
             <div class="card-header text-danger font-weight-bold">
                 <i class="far fa-times-circle"></i> Error Data
-                <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
+                <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span
+                        aria-hidden="true">×</span></button>
             </div>
             <div class="card-body text-danger">
                 <strong>Oh snap!</strong> {{ session()->get('delete') }}
@@ -93,13 +93,13 @@
 @endif
 
 @if (session()->has('edit'))
-
     <div class="col-lg-12 col-md-12">
         <!--Page Widget Error-->
         <div class="card bd-0 mg-b-20 bg-info-transparent alert p-0">
             <div class="card-header text-info font-weight-bold">
                 <i class="far fa-question-circle"></i> Info Data
-                <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
+                <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span
+                        aria-hidden="true">×</span></button>
             </div>
             <div class="card-body text-info">
                 <strong>Heads up!</strong> {{ session()->get('edit') }}
@@ -135,19 +135,50 @@
                                 <th class="border-bottom-0">#</th>
                                 <th class="border-bottom-0">name</th>
                                 <th class="border-bottom-0">email</th>
-                                <th class="border-bottom-0">phone</th>
+                                <th class="border-bottom-0">action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user )
-
+                            @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
+                                    <td>
+                                        {{-- @can('role-update') --}}
+                                            {{-- <a class="btn btn-primary btn-sm"
+                                                href="{{ route('users.edit', $user->id) }}">تعديل</a> --}}
+                                        {{-- @endcan --}}
+                                        @can('doctor-publish')
+
+
+                                                @if($user->status !="0")
+
+                                                <a href="{{route('user.not-publish',$user->id)}}"
+                                                    class="btn btn-danger">
+                                                    not publish
+                                                </a>
+
+                                                @else
+                                                <a href="{{route('user.publish',$user->id)}}"
+                                                    class="xm-btn btn-primary">
+                                                publish</a>
+
+                                                @endif
+
+                                          @endcan
+
+
+                                        @can('doctor-delete')
+                                            <a class="modal-effect btn btn-sm btn-danger"
+                                                data-role_id="{{ $user->id }}" data-effect="effect-scale"
+                                                data-toggle="modal" href="#modaldemo9{{ $user->id }}" title="delete"><i
+                                                    class="las la-trash"></i></a>
+                                        @endcan
+                                    </td>
 
                                 </tr>
+                                @include('admin.patients.delete_modal', ['user' => $user])
 
                             @endforeach
                         </tbody>
@@ -162,15 +193,15 @@
 
 
 
-    </div>
+</div>
 
 
-    <!-- delete -->
+<!-- delete -->
 
 
 
 
-    <!-- row closed -->
+<!-- row closed -->
 </div>
 <!-- Container closed -->
 </div>
@@ -202,16 +233,16 @@
 
 
 <!--Internal  Datepicker js -->
-<script src="{{URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js')}}"></script>
+<script src="{{ URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
 <!-- Internal Select2 js-->
-<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/rating/ratings.js')}}"></script>
+<script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/rating/ratings.js') }}"></script>
 <!--Internal  Sweet-Alert js-->
-<script src="{{URL::asset('assets/plugins/sweet-alert/sweetalert.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/sweet-alert/jquery.sweet-alert.js')}}"></script>
+<script src="{{ URL::asset('assets/plugins/sweet-alert/sweetalert.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/sweet-alert/jquery.sweet-alert.js') }}"></script>
 <!-- Sweet-alert js  -->
-<script src="{{URL::asset('assets/plugins/sweet-alert/sweetalert.min.js')}}"></script>
-<script src="{{URL::asset('assets/js/sweet-alert.js')}}"></script>
+<script src="{{ URL::asset('assets/plugins/sweet-alert/sweetalert.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/sweet-alert.js') }}"></script>
 
 <script>
     $('#modaldemo9').on('show.bs.modal', function(event) {

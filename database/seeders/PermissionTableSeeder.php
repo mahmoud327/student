@@ -26,10 +26,16 @@ class PermissionTableSeeder extends Seeder
            'admin-edit',
            'admin-delete',
 
-           'user-list',
-           'user-create',
-           'user-edit',
-           'user-delete',
+           'doctor-list',
+           'doctor-publish',
+           'doctor-create',
+           'doctor-edit',
+           'doctor-delete',
+
+           'patient-list',
+           'patient-create',
+           'patient-edit',
+           'patient-delete',
 
            'category-list',
            'category-create',
