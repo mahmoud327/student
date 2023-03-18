@@ -84,7 +84,7 @@ class ProductController extends Controller
 
         whereUserId(auth()->id())
         ->with(['user','product'])
-        ->paginte(10);
+        ->paginate(10);
 
 
         return JsonResponse::json('ok', ['data' => UserBuyProductResource::collection($products)]);
