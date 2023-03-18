@@ -7,10 +7,12 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\NewResource;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\UserBuyProductResource;
 use App\Models\Category;
 use App\Models\NewPage;
 use App\Models\Post;
 use App\Models\Product;
+use App\Models\UserBuyPorduct;
 use App\Services\PostService;
 use App\Traits\ImageTrait;
 use ArinaSystems\JsonResponse\Facades\JsonResponse;
@@ -57,5 +59,34 @@ class ProductController extends Controller
             ->findOrfail($id);
 
         return JsonResponse::json('ok', ['data' => ProductResource::make($product)]);;
+    }
+    public function buyProudct(Request $request)
+    {
+
+        $this->validate($request,[
+            'product_id'=>'required|numeric'
+        ]);
+
+        $product = UserBuyPorduct::create([
+            'user_id'=>auth()->id,
+            'product_id'=>$request->product_id
+        ]);
+
+        return sendJsonResponse([],'user buy product sucessfully');
+    }
+
+    public function getbuyProudct()
+    {
+
+
+
+        $products = UserBuyPorduct::
+
+        whereUserId(auth()->id)
+        ->with(['user','product'])
+        ->paginte(10);
+
+
+        return JsonResponse::json('ok', ['data' => UserBuyProductResource::collection($products)]);
     }
 }
