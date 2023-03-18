@@ -68,7 +68,7 @@ class ProductController extends Controller
         ]);
 
         $product = UserBuyPorduct::create([
-            'user_id'=>auth()->id,
+            'user_id'=>auth()->id(),
             'product_id'=>$request->product_id
         ]);
 
@@ -82,7 +82,7 @@ class ProductController extends Controller
 
         $products = UserBuyPorduct::
 
-        whereUserId(auth()->id)
+        whereUserId(auth()->id())
         ->with(['user','product'])
         ->paginte(10);
 
