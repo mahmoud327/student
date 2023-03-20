@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
             Admin::create([
                 'name' => 'Super Admin',
                 'email' => 'superadmin@mqa.com',
-                'password' => bcrypt('12345678'),
+                'password' => bcrypt('123456'),
             ]);
         }
     }

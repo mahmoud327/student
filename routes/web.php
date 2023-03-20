@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SpecializationController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +63,7 @@ Route::group([
             Route::resource('patient', PatientController::class);
 
             Route::resource('products', ProductController::class);
+            Route::resource('specializations', SpecializationController::class);
 
             Route::resource('categories', CategoryController::class);
             Route::get('categories/sub-categories/{parent_id?}', [SubCategoryController::class, 'index'])->name('category.sub-categories');
