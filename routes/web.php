@@ -42,6 +42,10 @@ Route::group([
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('login-page', 'AuthController@loginPage')->name('admin.login.page');
         Route::post('login', 'AuthController@login')->name('admin.login');
+
+        Route::get('register', 'AuthController@RegisterPage')->name('admin.register.page');
+        Route::post('register=doctor', 'AuthController@register')->name('doctor.register');
+        
         Route::get('logout', 'AuthController@logout')->name('admin.logout');
 
         Route::group(['middleware' => ['auth:admins']], function () {
