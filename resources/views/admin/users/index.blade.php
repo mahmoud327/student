@@ -134,6 +134,7 @@
                             <tr>
                                 <th class="border-bottom-0">#</th>
                                 <th class="border-bottom-0">name</th>
+                                <th class="border-bottom-0">cv</th>
                                 <th class="border-bottom-0">email</th>
                                 <th class="border-bottom-0">action</th>
                             </tr>
@@ -143,6 +144,11 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $user->name }}</td>
+                                    <td><a href={{ $user->cv_path }} class="btn btn-primary">
+                                           download cv
+                                        </a>
+
+                                    </td>
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         {{-- @can('role-update') --}}

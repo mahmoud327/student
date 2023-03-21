@@ -39,17 +39,27 @@ Route::group([
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 ], function () {
 
+
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::get('login-page', 'AuthController@loginPage')->name('admin.login.page');
         Route::post('login', 'AuthController@login')->name('admin.login');
 
         Route::get('register', 'AuthController@RegisterPage')->name('admin.register.page');
-        Route::post('register=doctor', 'AuthController@register')->name('doctor.register');
-        
+        Route::post('register-doctor', 'AuthController@register')->name('doctor.register');
+
         Route::get('logout', 'AuthController@logout')->name('admin.logout');
+
+        Route::group(['middleware' => ['auth:web']], function () {
+
+            Route::get('profile', 'AuthController@profile')->name('doctor.profile');
+            Route::post('update-profile', 'AuthController@updateProfile')->name('update.profile');
+
+        });
 
         Route::group(['middleware' => ['auth:admins']], function () {
             Route::get('home', 'HomeController@index')->name('admin.home');
+
+
 
             //route-for-services
             Route::resource('news', NewController::class);

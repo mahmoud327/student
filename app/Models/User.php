@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'status',
         'phone',
+        'cv',
         'specialization_id',
         'type',
         'service_id',
@@ -47,4 +48,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+        /*
+     * ----------------------------------------------------------------- *
+     * --------------------------- Accessors --------------------------- *
+     * ----------------------------------------------------------------- *
+     */
+    public function getCvPathAttribute()
+    {
+        return $this->cv ? asset('uploads/cvs/' . $this->cv) : asset('uploads/default.jpeg');
+
+    }
 }

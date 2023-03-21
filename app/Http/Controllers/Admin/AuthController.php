@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Specialization;
 use App\Models\User;
+use App\Traits\ImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Hash;
+
 
 class AuthController extends Controller
 {
+    use ImageTrait;
     public function loginPage()
     {
         return view('admin.signin');
@@ -39,14 +43,23 @@ class AuthController extends Controller
 
         $user=User::where('email',$request->email)->first();
 
-        if (!Auth::guard('admins')->attempt($attr) || $user) {
-            if($user->type=='doctor' && $user->status==1){
-               return 'dd';
-            }
-            else{
-                return back()->withErrors(['errors' => 'The account is not active.']);
 
-            }
+
+
+
+        if (!Auth::guard('admins')->attempt($attr)|| $user) {
+              if($user)
+              {
+
+                  if(auth()->guard('web')->attempt($attr)  && $user->status==1){
+                    return redirect()->route('doctor.profile');
+
+                  }
+                  else{
+                      return back()->withErrors(['errors' => 'data is invaild or account not activate.']);
+
+                  }
+              }
             return redirect()->route('admin.login.page')
                 ->withErrors(['errors' => 'The password is incorrect.']);
         }
@@ -97,4 +110,52 @@ class AuthController extends Controller
         return redirect()->route('admin.login.page');
 
     }
+
+    public function profile(){
+      return view('website.profile');
+    }
+
+    public function updateProfile(Request $request)
+    {
+
+        $rules = [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,'.auth()->user()->id,
+        'password' =>'confirmed',
+        'image'   =>'image|mimes:jpeg,png,jpg,gif,svg'
+      ];
+
+        $messages = [
+        'name.required'        => 'ادخل الاسم',
+
+        'email.required'        => 'ادخل البريد الالكتروني',
+        'email.unique'          => ' هذا البريد يستخدمه شخص اخر',
+        'password.confirmed'         => 'كلمة المرور غير متطابقة',
+      ];
+
+        $this->validate($request, $rules, $messages);
+
+        $input = $request->all();
+
+        $input = $request->all();
+        if (!empty($input['password'])) {
+            $input['password'] = Hash::make($input['password']);
+        } else {
+            $input = $request->except(['password']);
+            // $input = array_except($input,array('password'));
+        }
+
+
+       auth()->user()->update($input);
+
+        if ($request->file('cv')) {
+            $path = $this->uploadFile('uploads/cvs/', $request->file('cv'));
+            auth()->user()->update(['cv'=> $path ]);
+        }
+
+
+
+        return back()->with('status', 'Added successfully.');
+    }
+
 }
